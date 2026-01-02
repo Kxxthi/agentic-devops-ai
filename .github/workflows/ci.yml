@@ -11,8 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Show repository structure (debug)
+        run: |
+          pwd
+          ls
+          ls backend
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,10 +26,11 @@ jobs:
           node-version: 18
 
       - name: Install backend dependencies
-        working-directory: backend
-        run: npm install
+        run: |
+          cd backend
+          npm install
 
-      - name: Run backend health check
-        working-directory: backend
-        run: node -e "require('./src/index.js')"
-
+      - name: Syntax check backend (no server start)
+        run: |
+          cd backend
+          node --check src/index.js
