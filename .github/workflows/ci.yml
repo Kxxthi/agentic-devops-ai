@@ -25,4 +25,5 @@ jobs:
 
       - name: Run backend health check
         working-directory: backend
-        run: node src/index.js &
+        run: node -e "require('./src/index.js')"
+
